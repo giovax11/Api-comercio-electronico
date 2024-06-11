@@ -1,7 +1,10 @@
-import { UserRepository } from "../repositories/auth.repository.mjs";
+import { authService } from "../services/authService.mjs";
 import { request, response } from "express";
+import { UserRepository } from "../repositories/auth.repository.mjs";
+import { validationResult } from "express-validator";
 
-const repository = new UserRepository();
+const userRepository = new UserRepository();
+const service = new authService(userRepository);
 
 /**
  *
@@ -13,11 +16,15 @@ const repository = new UserRepository();
 
 export async function registerUser(req, res, next) {
   try {
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     let password = req.body.password;
     let email = req.body.email;
-    const user = await repository.userRegister(email, password);
+    const user = await service.userRegister(email, password);
     res.send(user);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
