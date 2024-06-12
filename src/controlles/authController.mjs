@@ -45,10 +45,16 @@ export async function loginUser(req, res, next) {
     let password = req.body.password;
     let email = req.body.email;
     const token = await service.loginUser(email, password);
-    res.header("auth-token", token).json({
-      error: null,
-      data: { token },
-    });
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        path: "/",
+      })
+      .status(200)
+      .json({
+        error: null,
+        data: { token },
+      });
   } catch (err) {
     next(err);
   }

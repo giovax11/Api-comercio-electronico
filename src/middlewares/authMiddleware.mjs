@@ -1,5 +1,5 @@
 export const authMiddleware = (err, req, res, next) => {
-  const token = req.header("auth-token") || req.query.token || req.body.token;
+  const token = req.cookies.token || req.query.token || req.body.token;
   if (!token) {
     return res.status(401).json({ error: "No se obtuvo un token valido " });
   }
