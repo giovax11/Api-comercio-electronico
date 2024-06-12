@@ -2,7 +2,7 @@ import { body } from "express-validator";
 import prisma from "../models/prisma/prisma.mjs";
 import { PASSWORD_MIN_LENGTH } from "../constants/password.mjs";
 
-export const validateRegisterUser = (UserRepository) => {
+export const validateRegisterUser = () => {
   return [
     body("email")
       .normalizeEmail()
@@ -23,6 +23,27 @@ export const validateRegisterUser = (UserRepository) => {
         `La contrasena debe tener al menos ${PASSWORD_MIN_LENGTH} caracteres`
       )
       .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/)
-      .withMessage(`La contrasena debe tener al menos una mayuscula, un numeor y un caracter especial`),
+      .withMessage(
+        `La contrasena debe tener al menos una mayuscula, un numeor y un caracter especial`
+      ),
+  ];
+};
+
+export const validateLogin = () => {
+  return [
+    body("email")
+      .normalizeEmail()
+      .not()
+      .isEmpty()
+      .withMessage("El campo es requerido")
+      .isEmail()
+      .withMessage("Ingrese un email valido")
+      .custom(async (email) => {
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (!user) {
+          throw new Error("El usuario ingresado no existe");
+        }
+      }),
+    body("password").not().isEmpty().withMessage("El campo es requerido"),
   ];
 };
