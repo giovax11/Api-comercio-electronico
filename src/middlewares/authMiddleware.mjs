@@ -1,4 +1,6 @@
-export const authMiddleware = (err, req, res, next) => {
+import jwt from "jsonwebtoken";
+
+export const authMiddleware = (req, res, next) => {
   const token = req.cookies.token || req.query.token || req.body.token;
   if (!token) {
     return res.status(401).json({ error: "No se obtuvo un token valido " });

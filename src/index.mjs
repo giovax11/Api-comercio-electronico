@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { authRouter } from "./routes/auth.mjs";
 import { productRouter } from "./routes/product.mjs";
+import { orderRouter } from "./routes/order.mjs";
 import bodyParser from "body-parser";
 import { ErrorHandler } from "./middlewares/errorHandlerMiddleware.mjs";
 import { authMiddleware } from "./middlewares/authMiddleware.mjs";
@@ -17,7 +18,8 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 
-app.use("/api/product", productRouter);
+app.use("/api/product", authMiddleware, productRouter);
+app.use("/api/order", authMiddleware, orderRouter);
 
 app.use(ErrorHandler);
 

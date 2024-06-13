@@ -38,4 +38,10 @@ export class ProductRepository {
     });
     return products;
   }
+  async getProduct(id_product) {
+    const product = await prisma.product.findUnique({
+      where: { id: id_product },
+    });
+    return product;
+  }
 }

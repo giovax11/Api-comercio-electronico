@@ -1,0 +1,6 @@
+//status
+export const ORDER_STATES = {
+  PENDING: "PENDING",
+  COMPLETED: "COMPLETED",
+  CANCELED: "CANCELED",
+};

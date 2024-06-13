@@ -19,14 +19,9 @@ export class authService {
     if (!validPassword) {
       throw new CustomError("contraseña incorrecta", 401);
     }
-    const token = jwt.sign(
-      {
-        userId: user.id,
-        email: user.email,
-      },
-      process.env.JWT_PRIVATE_KEY,
-      { expiresIn: process.env.TOKEN_EXPIRATION }
-    );
+    const token = jwt.sign(user, process.env.JWT_PRIVATE_KEY, {
+      expiresIn: process.env.TOKEN_EXPIRATION,
+    });
     return token;
   }
 }
