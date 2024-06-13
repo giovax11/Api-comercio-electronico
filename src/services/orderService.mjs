@@ -5,11 +5,19 @@ export class orderService {
     this.orderRepository = orderRepository;
   }
   async createOrder(order, userId) {
-    const newOrder = await this.orderRepository.createOrder(order, userId);
-    return newOrder;
+    try {
+      const newOrder = await this.orderRepository.createOrder(order, userId);
+      return newOrder;
+    } catch (err) {
+      throw new CustomError("Ha ocurrido un error al crear el pedido", 500);
+    }
   }
   async getOrders(userId, page, pagesize) {
     const orders = await this.orderRepository.getOrders(userId, page, pagesize);
     return orders;
+  }
+  async updateOrder(order, id) {
+    const updatedOrder = await this.orderRepository.updateOrder(order, id);
+    return updatedOrder;
   }
 }

@@ -1,6 +1,6 @@
 model order {
     id       Int            @id @default(autoincrement())
-    status    String         @db.VarChar(20)
+    status   String         @db.VarChar(20)
     date     DateTime       @default(now())
     products OrderProduct[]
     user     User           @relation(fields: [userId], references: [id])
@@ -9,9 +9,11 @@ model order {
 
 model OrderProduct {
     id        Int     @id @default(autoincrement())
-    order     order   @relation(fields: [orderId], references: [id])
+    order     order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
     orderId   Int
     product   product @relation(fields: [productId], references: [id])
     productId Int
     quantity  Int     @default(0)
+
+    @@unique([orderId, productId])
 }
