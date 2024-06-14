@@ -19,7 +19,7 @@ export const swaggerConfig = {
       },
     ],
     paths: {
-      "/api/auth/user_register": {
+      "/api/auth/register ": {
         post: {
           tag: "Autenticación",
           tags: ["Autenticación"],
@@ -118,7 +118,7 @@ export const swaggerConfig = {
           },
         },
       },
-      "/api/product/get_products": {
+      "/api/products/": {
         get: {
           tags: ["Productos"],
           summary: "Obtiene productos ",
@@ -160,7 +160,7 @@ export const swaggerConfig = {
           },
         },
       },
-      "/api/product/create_product": {
+      "/api/products": {
         post: {
           tags: ["Productos"],
           summary: "Registra un nuevo producto",
@@ -229,7 +229,7 @@ export const swaggerConfig = {
           },
         },
       },
-      "/api/product/delete_product/{id_product}": {
+      "/api/products/{id_product}/": {
         delete: {
           tags: ["Productos"],
           summary: "Elimina un producto",
@@ -264,7 +264,7 @@ export const swaggerConfig = {
           },
         },
       },
-      "/api/product/update_product/{id_product}": {
+      "/api/products/{id_product}": {
         put: {
           tags: ["Productos"],
           summary: "Actualizar un producto",
@@ -340,7 +340,7 @@ export const swaggerConfig = {
           },
         },
       },
-      "/api/order/get_orders": {
+      "/api/orders": {
         get: {
           tags: ["Pedidos"],
           summary: "Obtener pedidos ",
@@ -382,7 +382,7 @@ export const swaggerConfig = {
           },
         },
       },
-      "/api/order/create_order": {
+      "/api/orders/": {
         post: {
           tags: ["Pedidos"],
           summary: "Crear una orden",
@@ -450,7 +450,7 @@ export const swaggerConfig = {
           },
         },
       },
-      "/api/order/update_order/{id_order}": {
+      "/api/orders/{id_order}": {
         put: {
           tags: ["Pedidos"],
           summary: "Actualizar una orden",

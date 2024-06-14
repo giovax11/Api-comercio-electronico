@@ -11,7 +11,7 @@ const service = new authService(userRepository);
  *
  * @param {request} req
  * @param {response} res
- * @route /api/auth/user_register
+ * @route /api/auth/register
  * @method POST
  */
 

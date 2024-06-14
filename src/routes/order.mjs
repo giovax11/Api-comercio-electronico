@@ -17,7 +17,7 @@ export const orderRouter = express.Router();
  * Validates the request body using the validateCreateOrder middleware
  * and then calls the createOrder controller function to create a new order
  */
-orderRouter.post("/create_order", validateCreateOrder(), createOrder);
+orderRouter.post("/", validateCreateOrder(), createOrder);
 
 /**
  * Get an existing order
@@ -25,7 +25,7 @@ orderRouter.post("/create_order", validateCreateOrder(), createOrder);
  * Validates the request params using the validateGetOrder middleware
  * and then calls the getOrder controller function to retrieve an order
  */
-orderRouter.get("/get_orders", getOrders);
+orderRouter.get("/", getOrders);
 
 /**
  * Update an existing order
@@ -33,4 +33,4 @@ orderRouter.get("/get_orders", getOrders);
  * Validates the request body and params using the validateUpdateOrder middleware
  * and then calls the updateOrder controller function to update an order
  */
-orderRouter.put("/update_order/:id_order", validateUpdateOrder(), updateOrder);
+orderRouter.put("/:id_order", validateUpdateOrder(), updateOrder);

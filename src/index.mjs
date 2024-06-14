@@ -31,10 +31,10 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 
 // Mounting the productRouter at the /api/product path, with the authMiddleware applied.
-app.use("/api/product", authMiddleware, productRouter);
+app.use("/api/products", authMiddleware, productRouter);
 
 // Mounting the orderRouter at the /api/order path, with the authMiddleware applied.
-app.use("/api/order", authMiddleware, orderRouter);
+app.use("/api/orders", authMiddleware, orderRouter);
 
 // Serving the Swagger UI at the /api-doc path, using the OpenAPI specification generated earlier.
 app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs));

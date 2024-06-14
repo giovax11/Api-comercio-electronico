@@ -13,7 +13,7 @@ export const authRouter = express.Router();
  * Validates the request body using the validateRegisterUser middleware
  * and then calls the registerUser controller function to create a new user
  */
-authRouter.post("/user_register", validateRegisterUser(), registerUser);
+authRouter.post("/register", validateRegisterUser(), registerUser);
 
 /**
  * Login an existing user
