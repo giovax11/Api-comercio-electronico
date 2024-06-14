@@ -7,7 +7,7 @@ export const swaggerConfig = {
         "La API de Gestión de Productos y Órdenes de Compra es un servicio que permite gestionar los productos ofrecidos en una plataforma de comercio electrónico, así como también administrar las órdenes de compra realizadas por los usuarios. Tambien cuenta con un servicio de autenticación de usuarios de permite que solo los usuarios logueados permitan realizar peticiones a la API.",
       version: "1.0.0",
     },
-    host: "http://localhost:8080/",
+    host: process.env.URL,
     base: "/api",
     schemes: ["https"],
     consumes: ["application/json"],
@@ -15,7 +15,7 @@ export const swaggerConfig = {
     showCommonExtension: true,
     servers: [
       {
-        url: "http://localhost:8080",
+        url: process.env.URL,
       },
     ],
     paths: {
