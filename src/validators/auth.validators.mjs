@@ -24,7 +24,7 @@ export const validateRegisterUser = () => {
       )
       .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/)
       .withMessage(
-        `La contrasena debe tener al menos una mayuscula, un numeor y un caracter especial`
+        `La contrasena debe tener al menos una mayuscula, un numero y un caracter especial`
       ),
   ];
 };

@@ -11,7 +11,7 @@ model OrderProduct {
     id        Int     @id @default(autoincrement())
     order     order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
     orderId   Int
-    product   product @relation(fields: [productId], references: [id])
+    product   product @relation(fields: [productId], references: [id], onDelete: Cascade)
     productId Int
     quantity  Int     @default(0)
 
