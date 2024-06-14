@@ -2,8 +2,10 @@ import { body, param } from "express-validator";
 import prisma from "../models/prisma/prisma.mjs";
 import { ORDER_STATES } from "../constants/order.mjs";
 
+// Validation rules for creating an order.
 export const validateCreateOrder = () => {
   return [
+    //Validate order status
     body("status")
       .not()
       .isEmpty()
@@ -11,6 +13,7 @@ export const validateCreateOrder = () => {
       .isIn(Object.values(ORDER_STATES))
       .withMessage("The order state is not valid"),
 
+    //Validate order products
     body("products")
       .not()
       .isEmpty()
@@ -21,6 +24,7 @@ export const validateCreateOrder = () => {
     body("products.*.id")
       .isInt()
       .withMessage("Product ID must be an integer")
+      // Check if product exists and has sufficient stock
       .custom(async (id, { req }) => {
         const product = await prisma.product.findUnique({
           where: { id: parseInt(id) },
@@ -35,12 +39,15 @@ export const validateCreateOrder = () => {
           );
         }
       }),
+
+    //Validate product quantity
     body("products.*.quantity")
       .isInt({ min: 1 })
       .withMessage("Quantity must be greater than 0"),
   ];
 };
 
+//Validation rules for updating an existing order.
 export const validateUpdateOrder = () => {
   return [
     param("id_order").custom(async (id, { req }) => {
@@ -69,6 +76,7 @@ export const validateUpdateOrder = () => {
     body("products.*.id")
       .isInt()
       .withMessage("Product ID must be an integer")
+      // Check if product exists and has sufficient stock
       .custom(async (id, { req }) => {
         const product = await prisma.product.findUnique({
           where: { id: parseInt(id) },

@@ -2,48 +2,55 @@ import { body } from "express-validator";
 import prisma from "../models/prisma/prisma.mjs";
 import { PASSWORD_MIN_LENGTH } from "../constants/password.mjs";
 
+// Validate register user request
 export const validateRegisterUser = () => {
   return [
+    // Email validation
     body("email")
       .normalizeEmail()
       .not()
       .isEmpty()
-      .withMessage("El campo es requerido")
+      .withMessage("The fiel is required")
       .isEmail()
-      .withMessage("Ingrese un email valido")
+      .withMessage("Enter a valid email address")
+      // Check if email is already registered
       .custom(async (email) => {
         const user = await prisma.user.findUnique({ where: { email } });
         if (user) {
-          throw new Error("El email ya está registrado");
+          throw new Error("a user has already registered with this email");
         }
       }),
+
+    // Password validation
     body("password")
       .isLength({ min: PASSWORD_MIN_LENGTH })
       .withMessage(
-        `La contrasena debe tener al menos ${PASSWORD_MIN_LENGTH} caracteres`
+        `The password must be at least ${PASSWORD_MIN_LENGTH} characters long.`
       )
       .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/)
       .withMessage(
-        `La contrasena debe tener al menos una mayuscula, un numero y un caracter especial`
+        `The password must have at least one capital letter, a number and a special character.`
       ),
   ];
 };
 
+// Validate login request
 export const validateLogin = () => {
   return [
     body("email")
       .normalizeEmail()
       .not()
       .isEmpty()
-      .withMessage("El campo es requerido")
+      .withMessage("The field is required")
       .isEmail()
       .withMessage("Ingrese un email valido")
+      // Check if email is registered
       .custom(async (email) => {
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) {
-          throw new Error("El usuario ingresado no existe");
+          throw new Error("The user entered has not been registered");
         }
       }),
-    body("password").not().isEmpty().withMessage("El campo es requerido"),
+    body("password").not().isEmpty().withMessage("The field is required"),
   ];
 };

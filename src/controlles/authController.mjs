@@ -7,6 +7,7 @@ const userRepository = new UserRepository();
 const service = new authService(userRepository);
 
 /**
+ * Register a new user
  *
  * @param {request} req
  * @param {response} res
@@ -16,12 +17,12 @@ const service = new authService(userRepository);
 
 export async function registerUser(req, res, next) {
   try {
+    //Validation response from the validation middleware
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let password = req.body.password;
-    let email = req.body.email;
+    const { email, password } = req.body;
     const user = await service.userRegister(email, password);
     res.send(user);
   } catch (err) {
@@ -29,6 +30,7 @@ export async function registerUser(req, res, next) {
   }
 }
 /**
+ *User login
  *
  * @param {request} req
  * @param {response} res
@@ -38,13 +40,15 @@ export async function registerUser(req, res, next) {
 
 export async function loginUser(req, res, next) {
   try {
+    //Validation response from the validation middleware
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let password = req.body.password;
-    let email = req.body.email;
+    const { email, password } = req.body;
+    //Generate a new token for the user
     const token = await service.loginUser(email, password);
+    //Set token cookie to client with a success response
     res
       .cookie("token", token, {
         httpOnly: true,

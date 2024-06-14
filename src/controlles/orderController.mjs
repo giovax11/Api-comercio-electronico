@@ -2,11 +2,14 @@ import { orderService } from "../services/orderService.mjs";
 import { request, response } from "express";
 import { orderRepository } from "../repositories/order.repository.mjs";
 import { validationResult } from "express-validator";
-import { ProductRepository } from "../repositories/product.repository.mjs";
 
+// Create an instance of the OrderRepository class
 const OrderRepository = new orderRepository();
+// Create an instance of the OrderService class, passing in the OrderRepository instance
 const service = new orderService(OrderRepository);
+
 /**
+ *Create a new order controller
  *
  * @param {request} req
  * @param {response} res
@@ -17,6 +20,7 @@ const service = new orderService(OrderRepository);
 export async function createOrder(req, res, next) {
   const order = req.body;
   try {
+    // Validate the request data using the express-validator middleware
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -30,6 +34,7 @@ export async function createOrder(req, res, next) {
 }
 
 /**
+ *Get orders users orders
  *
  * @param {request} req
  * @param {response} res
@@ -40,8 +45,11 @@ export async function createOrder(req, res, next) {
 export async function getOrders(req, res, next) {
   try {
     const userId = req.user.id;
+
+    // Extract the page and page size from the query string, defaulting to 1 and 10 if not provided
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 10;
+
     const products = await service.getOrders(userId, page, pageSize);
     res.send(products);
   } catch (err) {
@@ -50,6 +58,7 @@ export async function getOrders(req, res, next) {
 }
 
 /**
+ *Update a order by id
  *
  * @param {request} req
  * @param {response} res
@@ -59,12 +68,14 @@ export async function getOrders(req, res, next) {
 
 export async function updateOrder(req, res, next) {
   try {
+    // Validate the request data using the express-validator middleware
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
     const id_order = parseInt(req.params.id_order);
     const order = req.body;
+
     const updatedOrder = await service.updateOrder(order, id_order);
     res.send(updatedOrder);
   } catch (err) {

@@ -1,3 +1,8 @@
+/**
+ * Custom error class
+ *
+ * Extends the built-in Error class to provide additional error handling features
+ */
 export class CustomError extends Error {
   constructor(message, status) {
     super();
