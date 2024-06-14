@@ -153,6 +153,9 @@ export const swaggerConfig = {
             200: {
               description: "Lista de productos recuperada con éxito",
             },
+            401: {
+              description: "Error de autenticación",
+            },
             500: {
               description:
                 "Ocurrio un error al intentar recuperar los productos",
@@ -208,7 +211,7 @@ export const swaggerConfig = {
                       type: "number",
                       minimum: 0,
                       description: "La cantidad debe ser un número positivo",
-                      example: 10,
+                      example: 600,
                     },
                   },
                   required: ["name", "price", "description", "stock"],
@@ -225,6 +228,9 @@ export const swaggerConfig = {
             },
             400: {
               description: "Los datos ingresados son inválidos",
+            },
+            401: {
+              description: "Error de autenticación",
             },
           },
         },
@@ -260,6 +266,9 @@ export const swaggerConfig = {
             },
             400: {
               description: "Los datos ingresados son inválidos",
+            },
+            401: {
+              description: "Error de autenticación",
             },
           },
         },
@@ -337,6 +346,9 @@ export const swaggerConfig = {
             400: {
               description: "Los datos ingresados son inválidos",
             },
+            401: {
+              description: "Error de autenticación",
+            },
           },
         },
       },
@@ -378,6 +390,9 @@ export const swaggerConfig = {
             },
             500: {
               description: "Ocurrio un error al intentar recuperar los pedidos",
+            },
+            401: {
+              description: "Error de autenticación",
             },
           },
         },
@@ -446,6 +461,9 @@ export const swaggerConfig = {
             400: {
               description:
                 "Los datos ingresados son inválidos o no hay suficiente inventario para la cantidad solicitada de productos",
+            },
+            401: {
+              description: "Error de autenticación",
             },
           },
         },
@@ -524,6 +542,9 @@ export const swaggerConfig = {
             400: {
               description:
                 "Los datos ingresados son inválidos o no hay suficiente inventario para la cantidad solicitada de productos",
+            },
+            401: {
+              description: "Error de autenticación",
             },
           },
         },
