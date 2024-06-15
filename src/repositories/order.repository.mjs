@@ -52,6 +52,9 @@ export class orderRepository {
               })),
             },
           },
+          include: {
+            products: true,
+          },
         });
         //Updates the products stock
         for (let product of order.products) {
@@ -149,6 +152,7 @@ export class orderRepository {
           updatedOrder = await prisma.order.update({
             where: { id },
             data: { status: order.status, totalCost: 0 },
+            include: { products: true },
           });
         } else {
           //Get the total cost of the order
@@ -169,6 +173,9 @@ export class orderRepository {
           updatedOrder = await prisma.order.update({
             where: { id },
             data: { status: order.status, totalCost },
+            include: {
+              products: true,
+            },
           });
 
           // Identify products to delete
@@ -255,6 +262,48 @@ export class orderRepository {
           "Ha ocurrido un error al actualizar el pedido",
           500
         );
+      });
+  }
+
+  /**
+   * Delete an order
+   *
+   * @param {number} id - Order ID
+   * @returns {Promise<order>} - Updated order
+   *
+   * This method delete an existing order and its associated products.
+   * It uses a transaction to ensure atomicity, updating the order and
+   * its products in a single, all-or-nothing operation.
+   */
+  async deleteOrder(id) {
+    return prisma
+      .$transaction(async (prisma) => {
+        const orderToDelete = await prisma.order.findUnique({
+          where: { id },
+          include: { products: true },
+        });
+        //Restore stock of products
+        if (orderToDelete.products) {
+          for (let product of orderToDelete.products) {
+            await prisma.product.update({
+              where: { id: product.productId },
+              data: {
+                stock: {
+                  increment: product.quantity,
+                },
+              },
+            });
+          }
+        }
+        //Deletes order
+        await prisma.order.delete({
+          where: { id: id },
+        });
+        return orderToDelete;
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new CustomError("Something went wrong", 500);
       });
   }
 }

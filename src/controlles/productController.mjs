@@ -10,7 +10,7 @@ const service = new productService(productRepository);
  *
  * @param {request} req
  * @param {response} res
- * @route /api/product/create_product
+ * @route /api/products/
  * @method POST
  */
 
@@ -34,7 +34,8 @@ export async function createProduct(req, res, next) {
  *
  * @param {request} req
  * @param {response} res
- * @route /api/product/get_products
+ * @route /api/products/?page=?&pageSize=?
+
  * @method GET
  */
 
@@ -56,7 +57,7 @@ export async function getProducts(req, res, next) {
  *
  * @param {request} req
  * @param {response} res
- * @route /api/product/delete_product/:id_product
+ * @route /api/products/:id_product
  * @method DELETE
  */
 
@@ -79,7 +80,7 @@ export async function deleteProduct(req, res, next) {
  *
  * @param {request} req
  * @param {response} res
- * @route /api/product/update_product/:id_product
+ * @route /api/products/:id_product
  * @method PUT
  */
 

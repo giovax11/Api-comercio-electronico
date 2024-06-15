@@ -13,7 +13,7 @@ const service = new orderService(OrderRepository);
  *
  * @param {request} req
  * @param {response} res
- * @route /api/order/create_order
+ * @route /api/orders/
  * @method POST
  */
 
@@ -38,7 +38,7 @@ export async function createOrder(req, res, next) {
  *
  * @param {request} req
  * @param {response} res
- * @route /api/order/get_order
+ * @route /api/orders/?page=?&pageSize=?
  * @method GET
  */
 
@@ -62,7 +62,7 @@ export async function getOrders(req, res, next) {
  *
  * @param {request} req
  * @param {response} res
- * @route /api/order/update_order
+ * @route /api/orders/id_order
  * @method PUT
  */
 
@@ -77,6 +77,32 @@ export async function updateOrder(req, res, next) {
     const order = req.body;
 
     const updatedOrder = await service.updateOrder(order, id_order);
+    res.send(updatedOrder);
+  } catch (err) {
+    next(err);
+  }
+}
+
+/**
+ *Delete a order by id
+ *
+ * @param {request} req
+ * @param {response} res
+ * @route /api/orders/id_order
+ * @method DELETE
+ */
+
+export async function deleteOrder(req, res, next) {
+  try {
+    // Validate the request data using the express-validator middleware
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const id_order = parseInt(req.params.id_order);
+    const order = req.body;
+
+    const updatedOrder = await service.deleteOrder(id_order);
     res.send(updatedOrder);
   } catch (err) {
     next(err);

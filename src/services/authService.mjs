@@ -43,7 +43,7 @@ export class authService {
     // Compare the provided password with the stored password using bcrypt
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      throw new CustomError("contraseña incorrecta", 401);
+      throw new CustomError("Wrong password provided", 401);
     }
     // Generate a JSON Web Token (JWT) for the logged-in user
     const token = jwt.sign(user, process.env.JWT_PRIVATE_KEY, {

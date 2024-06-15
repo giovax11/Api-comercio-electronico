@@ -3,10 +3,12 @@ import {
   createOrder,
   getOrders,
   updateOrder,
+  deleteOrder,
 } from "../controlles/orderController.mjs";
 import {
   validateCreateOrder,
   validateUpdateOrder,
+  validateDeleteOrder,
 } from "../validators/order.validators.mjs";
 
 export const orderRouter = express.Router();
@@ -34,3 +36,11 @@ orderRouter.get("/", getOrders);
  * and then calls the updateOrder controller function to update an order
  */
 orderRouter.put("/:id_order", validateUpdateOrder(), updateOrder);
+
+/**
+ * Delete an existing order
+ *
+ * Validates the request body and params using the validateDeleteOrder middleware
+ * and then calls the deleteOrder controller function to delete an order
+ */
+orderRouter.delete("/:id_order", validateDeleteOrder(), deleteOrder);

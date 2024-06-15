@@ -533,15 +533,53 @@ export const swaggerConfig = {
           },
           responses: {
             200: {
-              description: "Producto actualizado con éxito",
+              description: "Pedido actualizado con éxito",
             },
             500: {
-              description:
-                "Ocurrio un error al intentar actualizar el producto",
+              description: "Ocurrio un error al intentar actualizar el Pedido",
             },
             400: {
               description:
                 "Los datos ingresados son inválidos o no hay suficiente inventario para la cantidad solicitada de productos",
+            },
+            401: {
+              description: "Error de autenticación",
+            },
+          },
+        },
+      },
+      "/api/orders/{id_order}/": {
+        delete: {
+          tags: ["Pedidos"],
+          summary: "Eliminar un pedido",
+          description: "Elimina un pedido del usuario logueado",
+          consumes: ["application/json"],
+          parameters: [
+            {
+              in: "path",
+              name: "id_order",
+              description: "Id del pedido a eliminar",
+              required: true,
+              schema: {
+                type: "integer",
+                format: "int32",
+                minimum: 1,
+                example: 1,
+                description:
+                  "El id suministrado debe pertenecer a una orden del usuario que esta logueado en el sistema",
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: "Producto eliminado con éxito",
+            },
+            500: {
+              description: "Ocurrio un error al intentar eliminar el producto",
+            },
+            400: {
+              description:
+                "Los datos ingresados son inválidos, el ID suminstrado no pertenece a una orden del usuario",
             },
             401: {
               description: "Error de autenticación",

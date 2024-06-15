@@ -84,15 +84,58 @@ export const validateUpdateOrder = () => {
         if (!product) {
           throw new Error("Product does not exist");
         }
+        //Get new quantity of the order
         const quantity = req.body.products.find((val) => val.id == id).quantity;
-        if (quantity > product.stock) {
+
+        //Get previous order product
+        const existingOrder = await prisma.order.findUnique({
+          where: {
+            id: parseInt(req.params.id_order),
+          },
+          include: {
+            products: true,
+          },
+        });
+
+        //get product from order
+        const existingProduct = existingOrder?.products?.find(
+          (product) => product.productId === parseInt(id)
+        );
+
+        //get product quantity
+        const existingQuantity = existingProduct ? existingProduct.quantity : 0;
+
+        //Calucate total of stock available stock remaining plus the previous stored product quantity in the order
+        const newTotalQuantity = existingQuantity + product.stock;
+
+        //checks if the new quantity is greater than the stock remaining plus the previous stored product quantity
+        if (quantity > newTotalQuantity) {
           throw new Error(
-            `Insufficient Stock : Requested quantity of ${product.name} (${quantity}) exceeds available stock of ${product.stock} `
+            `Insufficient Stock : Requested quantity of ${product.name} (${quantity}) exceeds available stock of ${newTotalQuantity} `
           );
         }
       }),
     body("products.*.quantity")
       .isInt({ min: 1 })
       .withMessage("Quantity must be greater than 0"),
+  ];
+};
+
+//Validation rules for deleting an existing order.
+export const validateDeleteOrder = () => {
+  return [
+    param("id_order").custom(async (id, { req }) => {
+      const order = await prisma.order.findUnique({
+        where: { id: parseInt(id) },
+        include: { user: true },
+      });
+      if (!order) {
+        throw new Error("Order not found");
+      }
+
+      if (order.user.id !== req.user.id) {
+        throw new Error("You do not have permission to access this order");
+      }
+    }),
   ];
 };

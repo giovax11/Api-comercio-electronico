@@ -43,7 +43,7 @@ export const validateLogin = () => {
       .isEmpty()
       .withMessage("The field is required")
       .isEmail()
-      .withMessage("Ingrese un email valido")
+      .withMessage("Enter a valid email")
       // Check if email is registered
       .custom(async (email) => {
         const user = await prisma.user.findUnique({ where: { email } });

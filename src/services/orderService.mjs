@@ -7,7 +7,7 @@ export class orderService {
     this.orderRepository = orderRepository;
   }
   /**
-   * Create a new order
+   * Create a new order service
    *
    * @param {order} order - Order data
    * @param {number} userId - User ID
@@ -22,7 +22,7 @@ export class orderService {
     }
   }
   /**
-   * Get orders for a user
+   * Get orders for a user service
    *
    * @param {number} userId - User ID
    * @param {number} page - Page number
@@ -35,7 +35,7 @@ export class orderService {
   }
 
   /**
-   * Update an order
+   * Update an order service
    *
    * @param {order} order - Order data
    * @param {number} id - Order ID
@@ -43,6 +43,17 @@ export class orderService {
    */
   async updateOrder(order, id) {
     const updatedOrder = await this.orderRepository.updateOrder(order, id);
+    return updatedOrder;
+  }
+
+  /**
+   * Delete an order service
+   *
+   * @param {number} id - Order ID
+   * @returns {Promise<order>} - Updated order
+   */
+  async deleteOrder(id) {
+    const updatedOrder = await this.orderRepository.deleteOrder(id);
     return updatedOrder;
   }
 }
