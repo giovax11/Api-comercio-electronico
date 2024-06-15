@@ -211,6 +211,17 @@ Para obtener detalles completos sobre cómo utilizar la API, consulta nuestra do
 | `id`       | `int`    | **opcional**, representa el id del producto a ordenar, debe de estar registrado en el sistema |
 | `quantity` | `int`    | **opcional**, debe se mayor a 0                                                               |
 
+#### Delete order
+
+```http
+  Delete /api/orders/id_orders
+```
+
+| Parameter    | Type  | Description   |
+| :----------- | :---- | :------------ |
+| `id_orders` | `int` | **requerido** |
+
+
 ## Running Tests
 
 Ejecutar el siguiente comando para correr los test de la aplicación.
