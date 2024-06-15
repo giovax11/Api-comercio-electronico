@@ -60,10 +60,7 @@ TOKEN_EXPIRATION=
 4- Correr las migraciones de prisma y generar el cliente una vez se haya configurado el acceso a la bd
 
 ```env
-npx prisma init
-npx prisma migrate dev --name init
-npx prisma generate
-
+npx prisma migrate deploy
 ```
 
 5- Ejecutar el proyecto
