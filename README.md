@@ -213,3 +213,11 @@ Para obtener detalles completos sobre cómo utilizar la API, consulta nuestra do
 | `products` | `array`  | **opcional**                                                                                  |
 | `id`       | `int`    | **opcional**, representa el id del producto a ordenar, debe de estar registrado en el sistema |
 | `quantity` | `int`    | **opcional**, debe se mayor a 0                                                               |
+
+## Running Tests
+
+Ejecutar el siguiente comando para correr los test de la aplicación.
+
+```bash
+  npm run test
+```

@@ -18,7 +18,7 @@ const specs = swaggerJsdoc(swaggerConfig);
 dotenv.config();
 
 // Creating an instance of the Express.js app and setting the PORT number.
-const app = express();
+export const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Using the body-parser middleware to parse JSON bodies.
@@ -43,5 +43,5 @@ app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs));
 app.use(ErrorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Server started at http://localhost:${PORT}`);
+  console.log(`Server started listening on port:${PORT}`);
 });
