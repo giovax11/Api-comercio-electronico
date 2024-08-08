@@ -11,6 +11,9 @@ export const validateCreateProduct = () => {
       .isLength({ max: 100 })
       .withMessage("The field has exceeded the maximum allowed characters")
       .custom(async (name) => {
+        if (!name) {
+          return;
+        }
         const product = await prisma.product.findUnique({
           where: { name: name },
         });

@@ -24,8 +24,14 @@ export const validateCreateOrder = () => {
     body("products.*.id")
       .isInt()
       .withMessage("Product ID must be an integer")
+      .not()
+      .isEmpty()
+      .withMessage("The field is required")
       // Check if product exists and has sufficient stock
       .custom(async (id, { req }) => {
+        if (!id) {
+          return;
+        }
         const product = await prisma.product.findUnique({
           where: { id: parseInt(id) },
         });
@@ -76,8 +82,14 @@ export const validateUpdateOrder = () => {
     body("products.*.id")
       .isInt()
       .withMessage("Product ID must be an integer")
+      .not()
+      .isEmpty()
+      .withMessage("The field is required")
       // Check if product exists and has sufficient stock
       .custom(async (id, { req }) => {
+        if (!id) {
+          return;
+        }
         const product = await prisma.product.findUnique({
           where: { id: parseInt(id) },
         });
